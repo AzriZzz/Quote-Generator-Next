@@ -1,10 +1,20 @@
 import Head from "next/head";
 import { quotes } from "../data.ts";
+import { useState } from "react";
 
 export default function Home() {
-  var authors = Object.keys(quotes);
-  var author = authors[Math.floor(Math.random() * authors.length)];
-  var quote = quotes[author];
+  const [renderQuote, setRenderQuote] = useState("");
+  const [renderAuthor, setRenderAuthor] = useState("");
+
+
+  const randomQuote = () => {
+    const authors = Object.keys(quotes);
+    const author = authors[Math.floor(Math.random() * authors.length)];
+    const quote = quotes[author];
+
+    setRenderQuote(quote);
+    setRenderAuthor(author);
+  };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
@@ -14,17 +24,19 @@ export default function Home() {
       </Head>
 
       <main className="flex flex-col px-20 text-center">
-        <div className="w-full h-[500px] flex items-center border-8 border-borderBlue rounded-lg my-5 py-5" >
+        <div className="w-full h-[500px] flex items-center border-8 border-borderBlue rounded-lg my-5 py-5">
           <p>
-            {quote} <br/>
-            {author}
+            {renderQuote} <br />
+            {renderAuthor}
           </p>
         </div>
-
       </main>
-        <button className="p-3 mt-5 text-white rounded-lg bg-vibrantBlue">
-          Generate Quote
-        </button>
+      <button
+          onClick={() => randomQuote()}
+          className="p-3 mt-5 text-white rounded-lg bg-vibrantBlue"
+      >
+        Generate Quote
+      </button>
     </div>
   );
 }
